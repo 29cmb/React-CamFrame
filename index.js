@@ -1,1 +1,1 @@
-export { CameraZone, useCamPos, useOffset } from './Components/CameraZone';
+export { CameraZone, useCamPos, useOffset } from './components/CameraZone';

@@ -1,6 +1,6 @@
 import React, { Component, cloneElement, Children } from "react";
 import { create } from 'zustand';
-
+ 
 const CameraData = {
     Speed: 2
 };
