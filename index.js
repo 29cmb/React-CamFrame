@@ -1,1 +1,1 @@
-export { default } from './components/CameraZone.jsx'
+export { CameraZone, useCamPos, useOffset } from './Components/CameraZone';
