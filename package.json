@@ -2,9 +2,7 @@
   "name": "react-camframe",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,5 +11,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^4.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/29cmb/react-camframe"
   }
 }
