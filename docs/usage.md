@@ -31,7 +31,7 @@ function Page(){
 
 export default Page
 ```
-> [!INFO]\
+> [!NOTE]\
 > The CameraZone is a 100% width 100% height div that is moved to the center of the screen, and that div **DOES NOT MOVE**, only the child elements move.
 
 
