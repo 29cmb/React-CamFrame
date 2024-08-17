@@ -1,1 +1,1 @@
-export { default } from './Components/CameraZone.jsx'
+export { default } from './components/CameraZone.jsx'
