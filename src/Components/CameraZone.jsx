@@ -23,6 +23,7 @@ const offsetStore = create((set) => ({
 class CameraZone extends Component {
     constructor(props) {
         super(props);
+        this.props = props || {};
         this.state = {
             position: useCameraStore.getState().position,
             viewportSize: offsetStore.getState().offset,
@@ -92,6 +93,7 @@ class CameraZone extends Component {
 
     render() {
         const { children } = this.props;
+        const styles = this.props.positionStyles || { color: 'white', zIndex: 100, position: 'absolute', top: 0, left: 0, margin: "20px" };
         const { position, viewportSize } = this.state;
 
         const transformStyle = {
@@ -100,7 +102,7 @@ class CameraZone extends Component {
 
         return (
             <div id="camera-zone" ref={this.containerRef} style={{ overflow: 'hidden', width: '100%', height: '100%', position: 'absolute', zIndex: 1 }}>
-                <p id="posText">{`${Math.floor(position[0] / 15)}, ${-Math.floor(position[1] / 15)}`}</p>
+                <p id="posText" style={this.props.hideCoordinates ? {...styles, display: 'none'} : {...styles, display: 'block'}}>{`${Math.floor(position[0] / 15)}, ${-Math.floor(position[1] / 15)}`}</p>
                 <div style={{ ...transformStyle, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
                     {Children.map(children, child => {
                         const childPos = child.props.pos;
