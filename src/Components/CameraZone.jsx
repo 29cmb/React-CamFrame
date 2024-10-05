@@ -99,6 +99,7 @@ class CameraZone extends Component {
 
     render() {
         const { children } = this.props;
+        const styles = this.props.positionStyles || { color: 'white', zIndex: 100, position: 'absolute', top: 0, left: 0, margin: "20px" };
         const { position, viewportSize } = this.state;
 
         const transformStyle = {
