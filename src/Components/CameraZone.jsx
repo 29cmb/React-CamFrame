@@ -1,8 +1,8 @@
-import React, { Component, cloneElement, Children } from "react";
+import React, { Component, createRef, cloneElement, Children } from "react";
 import { create } from 'zustand';
- 
+
 const CameraData = {
-    Speed: 2
+    Speed: 2.5
 };
 
 const directions = {
@@ -16,20 +16,19 @@ const useCameraStore = create((set) => ({
 }));
 
 const offsetStore = create((set) => ({
-    offset: [window.innerWidth / 2, window.innerHeight / 2],
-    setOffset: (offset) => set({ offset: offset || [window.innerWidth / 2, window.innerHeight / 2] }),
+    offset: [0, 0],
+    setOffset: (offset) => set({ offset: offset || [0, 0] }),
 }));
 
 class CameraZone extends Component {
     constructor(props) {
         super(props);
-        this.props = props || {};
         this.state = {
             position: useCameraStore.getState().position,
-            viewportSize: offsetStore.getState().offset,
+            viewportSize: [0, 0],
             pressedKeys: {}
         };
-        this.containerRef = React.createRef();
+        this.containerRef = createRef();
         this.handleResize = this.handleResize.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -39,6 +38,7 @@ class CameraZone extends Component {
         window.addEventListener('resize', this.handleResize);
         window.addEventListener('keydown', this.handleKeyDown);
         window.addEventListener('keyup', this.handleKeyUp);
+        this.updateViewportSize();
         this.interval = setInterval(this.updatePosition.bind(this), 1);
     }
 
@@ -50,10 +50,16 @@ class CameraZone extends Component {
     }
 
     handleResize() {
-        this.setState({
-            viewportSize: [window.innerWidth / 2, window.innerHeight / 2]
-        });
-        offsetStore.setState({ offset: [window.innerWidth / 2, window.innerHeight / 2] });
+        this.updateViewportSize();
+    }
+
+    updateViewportSize() {
+        if (this.containerRef.current) {
+            const { clientWidth, clientHeight } = this.containerRef.current;
+            const newOffset = [clientWidth / 2, clientHeight / 2];
+            this.setState({ viewportSize: newOffset });
+            offsetStore.setState({ offset: newOffset });
+        }
     }
 
     handleKeyDown(event) {
@@ -93,7 +99,6 @@ class CameraZone extends Component {
 
     render() {
         const { children } = this.props;
-        const styles = this.props.positionStyles || { color: 'white', zIndex: 100, position: 'absolute', top: 0, left: 0, margin: "20px" };
         const { position, viewportSize } = this.state;
 
         const transformStyle = {
